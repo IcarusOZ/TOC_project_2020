@@ -85,6 +85,9 @@ Every time `menu` state is triggered to `advance` to another state, it will `go_
 	* Input: "2"
 		* Reply: show my profile
 
+	* Input: "3"
+		* Reply: show the FSM graph
+
 ## Deploy
 Setting to deploy webhooks on Heroku.
 
