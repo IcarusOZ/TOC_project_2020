@@ -1,6 +1,6 @@
 from transitions.extensions import GraphMachine
 
-from utils import send_text_message
+from utils import send_text_message, send_image_message
 
 
 class TocMachine(GraphMachine):
@@ -69,4 +69,6 @@ class TocMachine(GraphMachine):
 
     def on_enter_show_fsm(self, event):
         reply_token = event.reply_token
+        url = "https://ff1c5d81c103.ngrok.io/show-fsm"
+        send_image_message(reply_token, url)
         self.go_back(event)

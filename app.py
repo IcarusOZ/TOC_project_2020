@@ -53,7 +53,7 @@ machine = TocMachine(
         },
         {
             "trigger": "go_back",
-            "source": ["summation", "my_profile", "is_going_to_show_fsm"],
+            "source": ["summation", "my_profile", "show_fsm"],
             "dest": "menu"
         },
     ],
