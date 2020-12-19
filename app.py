@@ -14,21 +14,48 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user", "menu", "summation", "result", "my_profile", "show_fsm"],
     transitions=[
         {
-            "trigger": "advance",
+            "trigger": "init",
             "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "dest": "menu",
+            "conditions": "is_going_to_menu",
         },
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "source": "menu",
+            "dest": "summation",
+            "conditions": "is_going_to_summation",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "enter_number",
+            "source": "summation",
+            "dest": "result",
+            "conditions": "is_going_to_result",
+        },
+        {
+            "trigger": "go_back_to_summation",
+            "source": "result",
+            "dest": "summation",
+        },
+        {
+            "trigger": "advance",
+            "source": "menu",
+            "dest": "my_profile",
+            "conditions": "is_going_to_my_profile",
+        },
+        {
+            "trigger": "advance",
+            "source": "menu",
+            "dest": "show_fsm",
+            "conditions": "is_going_to_show_fsm",
+        },
+        {
+            "trigger": "go_back",
+            "source": ["summation", "my_profile", "is_going_to_show_fsm"],
+            "dest": "menu"
+        },
     ],
     initial="user",
     auto_transitions=False,
@@ -100,9 +127,18 @@ def webhook_handler():
             continue
         if not isinstance(event.message.text, str):
             continue
+
         print(f"\nFSM STATE: {machine.state}")
+        if(machine.state == "user"):
+            response = machine.init(event)
+        elif(machine.state == "menu"):
+            response = machine.advance(event)
+        elif(machine.state == "summation"):
+            response = machine.enter_number(event)
+            if(response == False):
+                response = machine.go_back(event)
+
         print(f"REQUEST BODY: \n{body}")
-        response = machine.advance(event)
         if response == False:
             send_text_message(event.reply_token, "Not Entering any State")
 
