@@ -74,16 +74,16 @@ Or You can use [servo](http://serveo.net/) to expose local servers to the intern
 ![fsm](./img/show-fsm.png)
 
 ## Usage
-The initial state is set to `user`.
+The initial state is set to `user`. After user input any character, it will go to `menu` state, and show the main menu.
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
+Every time `menu` state is triggered to `advance` to another state, it will `go_back` to `menu` state after the bot replies corresponding message. If the `menu` state is triggerd to `advance` to summation state, it will hint the user to input number to go to `result` state, or input non-number character to go back to `menu` state.
 
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+* menu
+	* Input: "1"
+		* response: show the summation menu. if user input number, summation program will calculate the result
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+	* Input: "2"
+		* Reply: show my profile
 
 ## Deploy
 Setting to deploy webhooks on Heroku.
