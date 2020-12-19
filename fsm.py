@@ -69,6 +69,6 @@ class TocMachine(GraphMachine):
 
     def on_enter_show_fsm(self, event):
         reply_token = event.reply_token
-        url = "https://git.heroku.com/jeremyhillaryboob.git/show-fsm"
+        url = "https://jeremyhillaryboob.herokuapp.com//show-fsm"
         send_image_message(reply_token, url)
         self.go_back(event)
