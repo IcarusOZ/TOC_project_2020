@@ -152,5 +152,5 @@ def show_fsm():
 
 
 if __name__ == "__main__":
-    PORT = os.environ["PORT"]
+    PORT = int(os.environ.get('PORT', 25396))
     app.run(host="0.0.0.0", port=PORT, debug=True, reloader=True)
